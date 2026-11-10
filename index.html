@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kai TV · 每週學習影音</title>
+<link rel="preconnect" href="https://i.ytimg.com">
+<style>
+:root{
+  --bg:#0f0f0f; --panel:#181818; --panel2:#212121; --line:#303030; --txt:#f1f1f1; --muted:#aaaaaa;
+  --red:#ff0033; --star:#ffd54a; --ok:#2ecc71;
+  --esl:#e53935; --maths:#fb8c00; --science:#43a047; --global:#1e88e5; --music:#8e24aa; --tv:#d81b60; --toan:#f4511e; --tnxh:#00897b; --robot:#3949ab;
+  --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:"Noto Sans TC","Roboto","Segoe UI",system-ui,sans-serif;font-size:15px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.hidden{display:none!important}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:20;height:60px;display:flex;align-items:center;gap:14px;padding:0 18px;background:var(--bg);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:22px;letter-spacing:-.5px;cursor:pointer;user-select:none}
+.logo .play{width:34px;height:24px;background:var(--red);border-radius:7px;position:relative}
+.logo .play::after{content:"";position:absolute;left:13px;top:6px;border-left:11px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.spacer{flex:1}
+.week{color:var(--muted);font-size:13px}
+.starbox{display:flex;align-items:center;gap:6px;background:var(--panel2);border-radius:999px;padding:6px 14px;font-weight:700;font-size:17px}
+.starbox .s{font-size:20px}
+.gear{background:none;border:0;color:var(--muted);font-size:22px;padding:4px 6px;border-radius:50%}
+.gear:hover{background:var(--panel2);color:#fff}
+
+/* ---------- layout ---------- */
+.wrap{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 60px)}
+nav{border-right:1px solid var(--line);padding:12px 10px;position:sticky;top:60px;height:calc(100vh - 60px);overflow:auto}
+nav h4{margin:14px 10px 6px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.navitem{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;font-size:15px}
+.navitem:hover{background:var(--panel2)}
+.navitem.active{background:var(--panel2);font-weight:700}
+.navitem .ico{width:26px;text-align:center;font-size:18px}
+.navitem .badge{margin-left:auto;font-size:12px;color:var(--muted)}
+.navitem .badge.done{color:var(--star)}
+.navitem.today .ico::after{content:"";display:inline-block;width:7px;height:7px;background:var(--red);border-radius:50%;margin-left:-4px;vertical-align:top}
+.chdot{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff}
+
+main{padding:18px 26px 60px;min-width:0}
+.pagehead{display:flex;align-items:flex-end;gap:16px;margin:6px 0 14px;flex-wrap:wrap}
+.pagehead h1{margin:0;font-size:26px}
+.pagehead .sub{color:var(--muted);font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13px;color:#ddd}
+
+.progress{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;margin-bottom:18px}
+.bar{flex:1;height:12px;background:#2a2a2a;border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffb300,#ffd54a);width:0;transition:width .5s}
+.progress b{font-size:15px;white-space:nowrap}
+.progress .claim{background:var(--star);color:#222;border:0;border-radius:999px;padding:8px 16px;font-weight:800;font-size:15px;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+h3.sec{margin:22px 0 10px;font-size:16px;color:#ddd;display:flex;align-items:center;gap:8px}
+h3.sec small{color:var(--muted);font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px 14px}
+.card{cursor:pointer;border-radius:var(--r);position:relative}
+.card .thumb{position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#222}
+.card .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.card:hover .thumb img{transform:scale(1.04)}
+.card .len{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.85);font-size:12px;padding:2px 5px;border-radius:4px;font-weight:600}
+.card .tag{position:absolute;left:6px;top:6px;font-size:11px;font-weight:800;padding:3px 7px;border-radius:5px;color:#fff;letter-spacing:.02em}
+.card .done{position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;font-size:48px}
+.card .done span{filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.card .meta{display:flex;gap:10px;padding:10px 2px 0}
+.card .meta .av{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff}
+.card .t{font-weight:600;font-size:14px;line-height:1.35;max-height:2.7em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.card .c{color:var(--muted);font-size:12.5px;margin-top:3px}
+.card .n{color:#ffcf7a;font-size:12px;margin-top:2px}
+.card.core .thumb{outline:2px solid transparent}
+.card .corebadge{position:absolute;right:6px;top:6px;background:var(--star);color:#222;font-size:11px;font-weight:800;padding:3px 7px;border-radius:5px}
+
+/* ---------- player ---------- */
+.endcover{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:5;text-align:center;padding:20px}
+.endcover .big{font-size:72px}
+.endcover h2{margin:0;font-size:26px}
+.endcover p{margin:0;color:var(--muted)}
+.endcover a{color:#8ab4f8;text-decoration:underline}
+.player{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px}
+.frame{aspect-ratio:16/9;background:#000;border-radius:var(--r);overflow:hidden;position:relative}
+.frame iframe{width:100%;height:100%;border:0;display:block}
+.ptitle{font-size:20px;font-weight:700;margin:14px 0 6px}
+.prow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.prow .av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+.watchbar{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:14px}
+.watchbar .bar{height:10px}
+.watchbar .st{font-weight:700;min-width:120px}
+.watchbar .st.ok{color:var(--ok)}
+.btn{background:var(--panel2);border:1px solid var(--line);color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:14px}
+.btn:hover{background:#2c2c2c}
+.btn.primary{background:#fff;color:#111;border-color:#fff}
+.btn.red{background:var(--red);border-color:var(--red)}
+.btn.gold{background:var(--star);color:#222;border-color:var(--star)}
+.uplist .item{display:flex;gap:10px;padding:6px 0;cursor:pointer;border-radius:8px}
+.uplist .item:hover{background:var(--panel2)}
+.uplist .thumb{width:150px;flex:none;aspect-ratio:16/9;border-radius:8px;overflow:hidden;position:relative;background:#222}
+.uplist .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.uplist .t{font-size:13.5px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.uplist .c{font-size:12px;color:var(--muted);margin-top:3px}
+.uplist .item.now{background:var(--panel2);outline:1px solid #444}
+.uplist .done-mini{position:absolute;right:4px;bottom:4px;font-size:16px}
+
+/* ---------- rewards ---------- */
+.weekrow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:10px 0 24px}
+.daycard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 10px;text-align:center}
+.daycard .d{font-weight:700}
+.daycard .dt{color:var(--muted);font-size:12px}
+.daycard .big{font-size:44px;margin:8px 0;filter:grayscale(1);opacity:.35}
+.daycard.got .big{filter:none;opacity:1}
+.daycard.today{outline:2px solid var(--red)}
+.ladder{display:grid;gap:10px}
+.rung{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px}
+.rung .need{font-size:22px;min-width:84px;font-weight:800}
+.rung.ok{border-color:var(--star)}
+.rung .ok-t{margin-left:auto;color:var(--star);font-weight:700}
+.stat{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.stat .box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 20px;min-width:150px}
+.stat .box b{display:block;font-size:30px}
+.stat .box span{color:var(--muted);font-size:13px}
+
+/* ---------- parent ---------- */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;width:min(760px,100%);max-height:92vh;overflow:auto;padding:22px 24px}
+.modal h2{margin:0 0 12px;font-size:20px}
+.modal h3{margin:20px 0 8px;font-size:15px;color:#ddd;border-top:1px solid var(--line);padding-top:16px}
+.frow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0}
+input,select,textarea{background:#111;border:1px solid #444;color:#fff;border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit}
+input[type=text],input[type=url]{min-width:220px}
+textarea{width:100%;min-height:90px;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.pin{font-size:28px;letter-spacing:.4em;text-align:center;width:180px}
+.vlist{display:grid;gap:6px;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px}
+.vlist .row{display:flex;align-items:center;gap:8px;font-size:13px}
+.vlist .row .t{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.vlist .row.hid{opacity:.45;text-decoration:line-through}
+.small{font-size:12px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#fff;color:#111;padding:10px 18px;border-radius:999px;font-weight:700;z-index:60;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+
+/* ---------- celebrate ---------- */
+.celebrate{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6)}
+.celebrate .card2{background:linear-gradient(160deg,#fff7d6,#ffe08a);color:#3a2a00;border-radius:24px;padding:36px 44px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.celebrate .big{font-size:90px;line-height:1}
+.celebrate h2{margin:10px 0 4px;font-size:30px}
+.celebrate p{margin:0 0 18px;font-size:17px}
+.confetti{position:fixed;top:-10px;width:10px;height:16px;z-index:69;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  nav{position:static;height:auto;display:flex;gap:4px;overflow-x:auto;padding:8px;border-right:0;border-bottom:1px solid var(--line)}
+  nav h4{display:none}
+  .navitem{flex:none;padding:8px 12px}
+  .navitem .badge{margin-left:6px}
+  .player{grid-template-columns:1fr}
+  main{padding:14px}
+  .weekrow{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .daycard .big{font-size:30px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" id="logoBtn"><span class="play"></span><span id="brandName">Kai TV</span></div>
+  <span class="week" id="weekLabel"></span>
+  <div class="spacer"></div>
+  <div class="starbox"><span class="s">⭐</span><span id="starCount">0</span></div>
+  <button class="gear" id="gearBtn" title="家長設定">⚙️</button>
+</header>
+
+<div class="wrap">
+  <nav id="nav"></nav>
+  <main id="main"></main>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script id="weekdata" type="application/json">{"weekStart": "2026-11-09", "weekEnd": "2026-11-13", "className": "1A2", "source": "1A2_PHIẾU BÁO BÀI_TUẦN TỪ 09.11.2026 ĐẾN 13.11.2026.pdf", "days": [{"date": "2026-11-09", "label": "星期一", "topics": ["ESL 4.4 Past simple", "Maths 5.2 Subtraction", "Tiếng Việt Bài 51 et êt it", "Music"], "videos": [{"id": "jxl28KQOHy4", "subject": "ESL", "title": "Adding '-ed' | Past Tense Verbs", "channel": "Nessy", "len": "2:18", "core": true, "note": "過去式規則動詞加 -ed"}, {"id": "KAsacxmPh1Q", "subject": "ESL", "title": "I Was, You Were (To Be Past Simple Song)", "channel": "Rockin' English", "len": "1:23", "core": true, "note": "was / were"}, {"id": "oDh2zkJW7ko", "subject": "Maths", "title": "Subtract by Ten: The Ones Stay the Same!", "channel": "Mr. R.'s Songs for Teaching", "len": "3:11", "core": true, "note": "兩位數減十位"}, {"id": "lylG2mvTHC0", "subject": "Tiếng Việt", "title": "Tiếng Việt lớp 1 Kết nối tri thức Bài 51: et êt it", "channel": "Lớp Cô Giang", "len": "17:17", "core": true}, {"id": "IYLTc3tGdzc", "subject": "Music", "title": "Au clair de la lune", "channel": "Comptines et chansons", "len": "2:14", "core": true, "note": "音樂課：左手練習曲"}, {"id": "LFY7CK0V8ak", "subject": "Maths", "title": "Subtraction Somersaults | Numberblocks S8 E14", "channel": "Numberblocks", "len": "4:30", "core": false}, {"id": "pLHSPrJUx4s", "subject": "Music", "title": "Thương Lắm Thầy Cô Ơi", "channel": "Bé Phan Hiếu Kiên", "len": "4:43", "core": false, "note": "複習歌曲"}, {"id": "nkWa-2Q1DK4", "subject": "Music", "title": "Ước Mơ Hồng (Phạm Trọng Cầu)", "channel": "Minh Duc Vu Official", "len": "3:12", "core": false, "note": "音樂課聆聽曲"}, {"id": "IsmTWL9nz8c", "subject": "Music", "title": "Luyện thanh với nốt Mi | LÀ LA LÁ", "channel": "VTV7 KIDS", "len": "2:35", "core": false, "note": "Mi 在五線譜的位置"}, {"id": "BzvoBtMGtBs", "subject": "Toán", "title": "Toán lớp 1 KNTT Bài 11: Phép trừ trong phạm vi 10 (Tiết 1)", "channel": "CÔ THU", "len": "11:56", "core": false}]}, {"date": "2026-11-10", "label": "星期二", "topics": ["Science 3.2 Properties of materials", "Global 2.4 Posters with a message", "Tiếng Việt Bài 52 ut ưt"], "videos": [{"id": "340MmuY_osY", "subject": "Science", "title": "Materials And Their Properties", "channel": "ClickView", "len": "3:58", "core": true, "note": "材料的特性"}, {"id": "JpUIytR9Aes", "subject": "Science", "title": "Absorbent and Non-absorbent Materials", "channel": "Pants Bear Kids", "len": "2:13", "core": true, "note": "absorbent 吸水"}, {"id": "0xTyKc6LGdY", "subject": "Global", "title": "Garbage Trucks for Children with Blippi | Learn About Recycling", "channel": "Blippi", "len": "13:15", "core": true, "note": "回收 recycling / rubbish"}, {"id": "6hNlNFzNV9M", "subject": "Tiếng Việt", "title": "Tiếng Việt lớp 1 Kết nối tri thức Bài 52: ut ưt", "channel": "Lớp Cô Giang", "len": "15:59", "core": true}, {"id": "AOvcW8l3RzE", "subject": "Global", "title": "Reduce Reuse Recycle Song for Kids", "channel": "The Kiboomers", "len": "1:17", "core": false}, {"id": "5V3ap8QrLJg", "subject": "Global", "title": "The Reduce, Reuse and Recycle SONG | 3 R's for Kids", "channel": "GenerationGenius", "len": "1:12", "core": false}, {"id": "kbrlBPw613Q", "subject": "Global", "title": "我們是玩具製造王｜廢物利用當個小Maker吧！", "channel": "樂樂TV", "len": "6:59", "core": false, "note": "廢物利用做海報／手作"}]}, {"date": "2026-11-11", "label": "星期三", "topics": ["ESL 4.4 Past simple", "Maths 5.2 Subtraction", "Science 3.2 Properties of materials", "Tiếng Việt Bài 53 ap ăp âp"], "videos": [{"id": "gf7OdFHCYfo", "subject": "ESL", "title": "Present - Past Song | Past Tense Verbs", "channel": "Fox English", "len": "1:34", "core": true}, {"id": "Ds226Vh7epg", "subject": "Maths", "title": "Grade 2 Math: Subtraction Rocks with Base Ten Blocks", "channel": "Virtual Elementary School", "len": "2:27", "core": true, "note": "十位／個位積木減法"}, {"id": "1UUROogwl24", "subject": "Science", "title": "Properties of Materials for Kids: Strength, Rigidity, Flexibility…", "channel": "Smile and Learn", "len": "6:14", "core": true, "note": "rigid / flexible / strong / weak"}, {"id": "bV0ODVjUHtI", "subject": "Tiếng Việt", "title": "Tiếng Việt lớp 1 Kết nối tri thức Bài 53: ap ăp âp", "channel": "Lớp Cô Giang", "len": "18:37", "core": true}, {"id": "0b4rsDuzThE", "subject": "ESL", "title": "Learn Past Tense Verbs #1 - Pattern Practice", "channel": "ELF Kids Videos", "len": "1:54", "core": false}, {"id": "zau4jtSA_kY", "subject": "Maths", "title": "10 More, 10 Less | Math Song for Kids", "channel": "Jack Hartmann", "len": "3:06", "core": false}, {"id": "GH29VWIPyfg", "subject": "Science", "title": "Understanding Venn Diagrams - 1st Grade", "channel": "Boddle Learning", "len": "3:48", "core": false, "note": "Venn diagram 分類"}]}, {"date": "2026-11-12", "label": "星期四", "topics": ["ESL 4.4 Past simple", "Science 3.2 Properties of materials", "Maths 5.2 Subtraction", "Tiếng Việt Bài 54–55 + Kể chuyện"], "videos": [{"id": "t-y9Y9kvUxk", "subject": "ESL", "title": "The Past Tense Song", "channel": "Teacher Ham", "len": "2:06", "core": true}, {"id": "I03Jx9pIeUs", "subject": "ESL", "title": "Was and Were Song | Learn English Past Tense", "channel": "ABC Buddies", "len": "3:16", "core": true}, {"id": "gbb2W-rrYik", "subject": "Maths", "title": "2-digit subtract 1-digit | Column Subtraction", "channel": "Maths with Mrs B.", "len": "4:39", "core": true, "note": "直式減法 column subtraction"}, {"id": "lTcWiBy0mqk", "subject": "Tiếng Việt", "title": "Tiếng Việt lớp 1 Kết nối tri thức Bài 54: op ôp ơp", "channel": "Lớp Cô Giang", "len": "19:58", "core": true}, {"id": "mhb_M_8J9jU", "subject": "Tiếng Việt", "title": "Mật Ong Của Gấu Con | Kể chuyện lớp 1 (Hoạt hình 3D)", "channel": "Trang Sách Tuổi Thơ", "len": "4:11", "core": true, "note": "Bài 55 Kể chuyện"}, {"id": "489srqkdgMQ", "subject": "Maths", "title": "Master 2-Digit Column Subtraction in Minutes!", "channel": "Maths with Mrs B.", "len": "3:04", "core": false}, {"id": "TGXIZIe3Nzc", "subject": "Maths", "title": "Learn Subtraction | 30 Minutes of Subtraction!", "channel": "Numberblocks", "len": "31:38", "core": false}]}, {"date": "2026-11-13", "label": "星期五", "topics": ["ESL 4.5 Long i", "Toán Bài 11 Phép trừ trong phạm vi 10", "TN&XH Bài 10", "HĐTN Kính yêu thầy cô", "Robotics Bí mật đại dương"], "videos": [{"id": "U60sOQxbO4I", "subject": "ESL", "title": "Long Vowel Letter i - ie / i-e / igh / y - Phonics Song", "channel": "English4abc", "len": "2:54", "core": true, "note": "night / kite / fly / cry"}, {"id": "yuSHxrSNB8o", "subject": "ESL", "title": "Alphablocks - Long Vowels: Long I", "channel": "Alphablocks", "len": "4:42", "core": true}, {"id": "BlnP_uVAc7c", "subject": "Toán", "title": "Toán lớp 1 KNTT Bài 11 Tiết 2: Phép trừ trong phạm vi 10", "channel": "Lớp Cô Giang", "len": "15:50", "core": true}, {"id": "UeOGw2ehdbk", "subject": "TN&XH", "title": "TNXH lớp 1 - Bài 10 Cùng khám phá quang cảnh xung quanh", "channel": "10 Phút Học Bài TV", "len": "14:04", "core": true}, {"id": "_yOevzjtNA4", "subject": "ESL", "title": "Long Vowel Sounds | ie, igh | Phonics Songs and Stories", "channel": "Little Fox", "len": "3:39", "core": false}, {"id": "e6I6rAIPTuI", "subject": "Robotics", "title": "海洋怎麼被汙染？台中科博館探險", "channel": "樂樂TV", "len": "14:52", "core": false, "note": "Robotics：Bí mật đại dương 海洋的秘密"}, {"id": "9xF6xhNKp18", "subject": "Robotics", "title": "為什麼大海看起來是藍色的？", "channel": "樂樂TV", "len": "2:25", "core": false}, {"id": "vUncBbbJSiM", "subject": "Music", "title": "7 NỐT NHẠC ở vị trí nào trong KHUÔNG NHẠC? | LÀ LA LÁ", "channel": "VTV7 KIDS", "len": "3:01", "core": false}]}]}</script>
+<script id="channeldata" type="application/json">{"channels": [{"name": "Numberblocks", "handle": "numberblocks", "channelId": "UC_qs3c0ehDvZkbiEbOj6Drg", "subject": "Maths", "color": "#ff7a00"}, {"name": "Blippi", "handle": "@Blippi", "channelId": "UCx3RchaoRFpDpB60x7xRREw", "subject": "Global", "color": "#1e88e5"}, {"name": "樂樂TV", "handle": "@XIAOXINGXING-樂樂TV", "channelId": "UCtWocEKhgpEffPDlwwozK9Q", "subject": "Science", "color": "#43a047"}, {"name": "Alphablocks", "handle": "@officialalphablocks", "channelId": "UC0fXNmjDoC7ckPyT6qM8Urw", "subject": "ESL", "color": "#e53935"}]}</script>
+
+<script>
+/* =========================================================
+   Kai TV — weekly learning video hub with daily rewards
+   Data: embedded JSON (weekdata / channeldata) + localStorage overrides
+   ========================================================= */
+const BASE_WEEK = JSON.parse(document.getElementById('weekdata').textContent);
+const BASE_CHANNELS = JSON.parse(document.getElementById('channeldata').textContent).channels;
+const LS_KEY = 'kaitv:' + BASE_WEEK.weekStart;
+const LS_GLOBAL = 'kaitv:global';
+
+const SUBJ = {
+  'ESL':{c:'var(--esl)',k:'E'}, 'Maths':{c:'var(--maths)',k:'M'}, 'Science':{c:'var(--science)',k:'S'},
+  'Global':{c:'var(--global)',k:'G'}, 'Music':{c:'var(--music)',k:'♪'}, 'Tiếng Việt':{c:'var(--tv)',k:'V'},
+  'Toán':{c:'var(--toan)',k:'T'}, 'TN&XH':{c:'var(--tnxh)',k:'X'}, 'Robotics':{c:'var(--robot)',k:'R'}, 'Art':{c:'#6d4c41',k:'A'}
+};
+const DEFAULT_LADDER = [
+  {need:1, text:'貼紙一張 🌈'},
+  {need:3, text:'睡前多講一本故事 📚'},
+  {need:5, text:'週末特別獎勵（和爸媽一起決定）🎁'}
+];
+
+/* ---------- state ---------- */
+function load(k,d){ try{ return Object.assign({}, d, JSON.parse(localStorage.getItem(k)||'{}')); }catch(e){ return d; } }
+let state = load(LS_KEY, {watched:{}, stars:{}, hidden:{}, added:[], claimedDates:{}});
+let glob  = load(LS_GLOBAL, {pin:'1234', ladder:DEFAULT_LADDER, channels:[], brand:'Kai TV', threshold:0.9});
+if(!Array.isArray(state.added)) state.added=[];
+function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); localStorage.setItem(LS_GLOBAL, JSON.stringify(glob)); }
+
+/* ---------- derived data ---------- */
+function days(){
+  return BASE_WEEK.days.map(d=>{
+    const extra = state.added.filter(a=>a.date===d.date);
+    const videos = [...d.videos, ...extra].filter(v=>!state.hidden[v.id]);
+    return {...d, videos};
+  });
+}
+function allChannels(){ return [...BASE_CHANNELS, ...(glob.channels||[])]; }
+function findVideo(id){ for(const d of days()){ const v=d.videos.find(x=>x.id===id); if(v) return {v,d}; } return null; }
+function coreOf(d){ return d.videos.filter(v=>v.core); }
+function coreDone(d){ const c=coreOf(d); return c.length>0 && c.every(v=>state.watched[v.id]); }
+function starTotal(){ return Object.values(state.stars).filter(Boolean).length; }
+function todayISO(){ const t=new Date(); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); }
+function defaultDay(){ const t=todayISO(); const d=days().find(x=>x.date===t); if(d) return d.date; if(t<BASE_WEEK.weekStart) return BASE_WEEK.days[0].date; if(t>BASE_WEEK.weekEnd) return BASE_WEEK.days[BASE_WEEK.days.length-1].date; return BASE_WEEK.days[0].date; }
+function fmtDate(iso){ const [y,m,d]=iso.split('-'); return `${+m}/${+d}`; }
+function esc(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.remove('hidden'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.add('hidden'),2200); }
+function subj(v){ return SUBJ[v.subject]||{c:'#555',k:'?'}; }
+function thumb(id){ return `https://i.ytimg.com/vi/${id}/mqdefault.jpg`; }
+
+/* ---------- routing ---------- */
+let route = {page:'day', date:defaultDay(), vid:null, ch:null};
+function go(r){ route={...route,...r}; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* ---------- render: nav ---------- */
+function renderNav(){
+  const nav=document.getElementById('nav'); const t=todayISO();
+  let h='<h4>本週課程</h4>';
+  for(const d of days()){
+    const done=state.stars[d.date]; const c=coreOf(d).filter(v=>state.watched[v.id]).length;
+    h+=`<div class="navitem ${route.page==='day'&&route.date===d.date?'active':''} ${d.date===t?'today':''}" data-day="${d.date}">
+      <span class="ico">📅</span><span>${esc(d.label)} <span class="small">${fmtDate(d.date)}</span></span>
+      <span class="badge ${done?'done':''}">${done?'⭐':c+'/'+coreOf(d).length}</span></div>`;
+  }
+  h+=`<div class="navitem ${route.page==='rewards'?'active':''}" data-page="rewards"><span class="ico">🏆</span><span>我的獎勵</span><span class="badge done">${starTotal()}⭐</span></div>`;
+  h+='<h4>延伸頻道</h4>';
+  for(const ch of allChannels()){
+    h+=`<div class="navitem ${route.page==='channel'&&route.ch===ch.channelId?'active':''}" data-ch="${esc(ch.channelId)}"><span class="chdot" style="background:${ch.color||'#555'}">${esc(ch.name[0])}</span><span>${esc(ch.name)}</span></div>`;
+  }
+  nav.innerHTML=h;
+  nav.querySelectorAll('[data-day]').forEach(e=>e.onclick=()=>go({page:'day',date:e.dataset.day}));
+  nav.querySelectorAll('[data-page]').forEach(e=>e.onclick=()=>go({page:e.dataset.page}));
+  nav.querySelectorAll('[data-ch]').forEach(e=>e.onclick=()=>go({page:'channel',ch:e.dataset.ch}));
+  document.getElementById('starCount').textContent=starTotal();
+  document.getElementById('brandName').textContent=glob.brand||'Kai TV';
+  document.getElementById('weekLabel').textContent=`${BASE_WEEK.className} · ${fmtDate(BASE_WEEK.weekStart)}–${fmtDate(BASE_WEEK.weekEnd)}`;
+}
+
+/* ---------- render: card ---------- */
+function card(v){
+  const s=subj(v); const w=state.watched[v.id];
+  return `<div class="card ${v.core?'core':''}" data-vid="${esc(v.id)}">
+    <div class="thumb"><img loading="lazy" src="${thumb(v.id)}" alt="">
+      <span class="tag" style="background:${s.c}">${esc(v.subject)}</span>
+      ${v.core?'<span class="corebadge">今日任務</span>':''}
+      <span class="len">${esc(v.len||'')}</span>
+      ${w?'<div class="done"><span>✅</span></div>':''}</div>
+    <div class="meta"><div class="av" style="background:${s.c}">${esc((v.channel||'?')[0])}</div>
+      <div><div class="t">${esc(v.title)}</div><div class="c">${esc(v.channel||'')}</div>${v.note?`<div class="n">💡 ${esc(v.note)}</div>`:''}</div></div>
+  </div>`;
+}
+
+/* ---------- render: day page ---------- */
+function renderDay(){
+  const d=days().find(x=>x.date===route.date)||days()[0];
+  const core=coreOf(d), bonus=d.videos.filter(v=>!v.core);
+  const doneN=core.filter(v=>state.watched[v.id]).length; const pct=core.length?Math.round(doneN/core.length*100):0;
+  const got=state.stars[d.date]; const ready=coreDone(d)&&!got;
+  let h=`<div class="pagehead"><h1>${esc(d.label)} <span class="sub">${fmtDate(d.date)}</span></h1><span class="sub">看完「今日任務」就能拿到今天的 ⭐</span></div>`;
+  h+=`<div class="chips">${(d.topics||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div>`;
+  h+=`<div class="progress"><b>今日任務 ${doneN}/${core.length}</b><div class="bar"><i style="width:${pct}%"></i></div>
+       ${got?'<b style="color:var(--star)">⭐ 今天的星星拿到了！</b>':ready?'<button class="claim" id="claimBtn">🎉 領取星星！</button>':'<span class="small">全部看完就能領星星</span>'}</div>`;
+  h+=`<h3 class="sec">📌 今日任務 <small>${core.length} 部</small></h3><div class="grid">${core.map(card).join('')}</div>`;
+  if(bonus.length) h+=`<h3 class="sec">🎁 延伸觀賞 <small>看完任務後可以多看，不計入星星</small></h3><div class="grid">${bonus.map(card).join('')}</div>`;
+  document.getElementById('main').innerHTML=h;
+  bindCards(); const cb=document.getElementById('claimBtn'); if(cb) cb.onclick=()=>claimStar(d.date);
+}
+function bindCards(){ document.querySelectorAll('[data-vid]').forEach(e=>e.onclick=()=>go({page:'watch',vid:e.dataset.vid})); }
+
+/* ---------- render: watch page ---------- */
+let yt=null, pollTimer=null, ytReady=false;
+window.onYouTubeIframeAPIReady=()=>{ ytReady=true; if(route.page==='watch') mountPlayer(); };
+(function loadAPI(){ const s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; document.head.appendChild(s); })();
+
+function renderWatch(){
+  const f=findVideo(route.vid); if(!f){ go({page:'day'}); return; }
+  const {v,d}=f; const s=subj(v); const w=state.watched[v.id];
+  const list=d.videos.filter(x=>x.id!==v.id&&x.core);
+  let h=`<div class="player"><div>
+    <div class="frame"><div id="ytp"></div><div id="endcover" class="endcover hidden"></div></div>
+    <div class="ptitle">${esc(v.title)}</div>
+    <div class="prow"><div class="av" style="background:${s.c}">${esc((v.channel||'?')[0])}</div><div><b style="color:#fff">${esc(v.channel||'')}</b><br>${esc(v.subject)} · ${esc(d.label)} ${v.core?'· <span style="color:var(--star)">今日任務</span>':'· 延伸觀賞'}</div>
+      <div class="spacer"></div><button class="btn" id="backBtn">← 回到 ${esc(d.label)}</button></div>
+    ${v.note?`<div class="prow" style="margin-top:8px;color:#ffcf7a">💡 ${esc(v.note)}</div>`:''}
+    <div class="watchbar"><span class="st ${w?'ok':''}" id="wstat">${w?'✅ 已看完':'▶ 播放中…'}</span><div class="bar"><i id="wbar" style="width:${w?100:0}%"></i></div><span class="small" id="wpct">${w?'100%':'0%'}</span></div>
+  </div>
+  <div class="uplist"><h3 class="sec" style="margin-top:0">📌 ${esc(d.label)}的任務</h3>
+    ${list.map(x=>`<div class="item" data-vid="${esc(x.id)}"><div class="thumb"><img loading="lazy" src="${thumb(x.id)}" alt="">${state.watched[x.id]?'<span class="done-mini">✅</span>':''}</div><div><div class="t">${esc(x.title)}</div><div class="c">${esc(x.channel||'')} · ${esc(x.len||'')} </div></div></div>`).join('')}
+    ${list.length?'':'<p class="small">今天的任務只有這一部！</p>'}
+  </div></div>`;
+  document.getElementById('main').innerHTML=h;
+  bindCards(); document.getElementById('backBtn').onclick=()=>go({page:'day',date:d.date});
+  mountPlayer();
+}
+function destroyPlayer(){ clearInterval(pollTimer); pollTimer=null; if(yt&&yt.destroy){ try{yt.destroy();}catch(e){} } yt=null; }
+function mountPlayer(){
+  if(!ytReady||route.page!=='watch'||!document.getElementById('ytp')) return;
+  destroyPlayer();
+  yt=new YT.Player('ytp',{videoId:route.vid, host:'https://www.youtube-nocookie.com',
+    playerVars:{rel:0,modestbranding:1,playsinline:1,autoplay:1,iv_load_policy:3},
+    events:{
+      onStateChange:e=>{ if(e.data===YT.PlayerState.ENDED){ markWatched(route.vid); showEnd(); } else if(e.data===YT.PlayerState.PLAYING) hideEnd(); },
+      onError:e=>showError(e.data)}});
+  pollTimer=setInterval(()=>{
+    if(!yt||!yt.getDuration) return; const dur=yt.getDuration(), cur=yt.getCurrentTime();
+    if(!dur) return; const r=Math.min(1,cur/dur);
+    const b=document.getElementById('wbar'), p=document.getElementById('wpct');
+    if(b&&!state.watched[route.vid]){ b.style.width=Math.round(r*100)+'%'; p.textContent=Math.round(r*100)+'%'; }
+    if(r>=(glob.threshold||0.9)) markWatched(route.vid);
+  },1500);
+}
+function showEnd(){ const c=document.getElementById('endcover'); if(!c) return; const f=findVideo(route.vid); const next=f?f.d.videos.filter(x=>x.core&&!state.watched[x.id]&&x.id!==route.vid)[0]:null;
+  c.classList.remove('hidden'); c.innerHTML=`<div class="big">✅</div><h2>看完了！</h2>${next?`<button class="btn primary" id="nextBtn">▶ 下一部：${esc(next.title)}</button>`:''}<button class="btn" id="againBtn">再看一次</button><button class="btn" id="backBtn2">← 回到 ${esc(f?f.d.label:'')}</button>`;
+  if(next) c.querySelector('#nextBtn').onclick=()=>go({page:'watch',vid:next.id}); c.querySelector('#againBtn').onclick=()=>{ hideEnd(); yt&&yt.seekTo(0); yt&&yt.playVideo(); }; c.querySelector('#backBtn2').onclick=()=>go({page:'day',date:f?f.d.date:route.date}); }
+function hideEnd(){ const c=document.getElementById('endcover'); if(c) c.classList.add('hidden'); }
+function showError(code){ const c=document.getElementById('endcover'); if(!c) return; c.classList.remove('hidden');
+  const isFile=location.protocol==='file:';
+  c.innerHTML=`<div class="big">😮</div><h2>這部影片現在不能在這裡播</h2><p>錯誤代碼 ${esc(code)}${isFile?'：請用「啟動KaiTV.bat」開啟網頁（YouTube 不允許從本機檔案直接播放）':''}</p><p><a href="https://www.youtube.com/watch?v=${esc(route.vid)}" target="_blank" rel="noopener">在 YouTube 開啟</a>（請家長陪同）</p>`; }
+function markWatched(id){
+  if(state.watched[id]) return;
+  state.watched[id]=true; save();
+  const st=document.getElementById('wstat'); if(st){ st.textContent='✅ 已看完'; st.classList.add('ok'); }
+  const b=document.getElementById('wbar'); if(b) b.style.width='100%'; const p=document.getElementById('wpct'); if(p) p.textContent='100%';
+  renderNav(); toast('✅ 看完一部！');
+  const f=findVideo(id); if(f&&coreDone(f.d)&&!state.stars[f.d.date]){ setTimeout(()=>{ if(!state.stars[f.d.date]) showClaim(f.d.date); },800); }
+}
+function showClaim(date){
+  const d=days().find(x=>x.date===date);
+  const el=document.createElement('div'); el.className='celebrate';
+  el.innerHTML=`<div class="card2"><div class="big">🌟</div><h2>太棒了！</h2><p>${esc(d.label)}的任務全部完成</p><button class="btn gold" id="claimNow" style="font-size:18px;padding:12px 28px">領取今天的星星 ⭐</button></div>`;
+  document.body.appendChild(el); document.getElementById('claimNow').onclick=()=>{ el.remove(); claimStar(date); };
+}
+function claimStar(date){
+  if(state.stars[date]) return; state.stars[date]=true; state.claimedDates[date]=new Date().toISOString(); save();
+  confetti(); toast('⭐ 拿到星星了！目前共 '+starTotal()+' 顆');
+  const got=starTotal(); const hit=(glob.ladder||[]).find(l=>l.need===got);
+  setTimeout(()=>{ renderNav(); if(hit){ const el=document.createElement('div'); el.className='celebrate';
+    el.innerHTML=`<div class="card2"><div class="big">🎁</div><h2>解鎖獎勵！</h2><p>集滿 ${got} 顆星星：<b>${esc(hit.text)}</b></p><button class="btn primary" id="okR">太好了！</button></div>`;
+    document.body.appendChild(el); document.getElementById('okR').onclick=()=>{ el.remove(); render(); }; } else render(); },600);
+}
+function confetti(){ const colors=['#ffd54a','#ff5252','#40c4ff','#69f0ae','#e040fb','#ffab40'];
+  for(let i=0;i<120;i++){ const c=document.createElement('div'); c.className='confetti'; c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length]; c.style.animationDuration=(1.8+Math.random()*1.6)+'s'; c.style.animationDelay=(Math.random()*.6)+'s'; c.style.transform=`rotate(${Math.random()*360}deg)`; document.body.appendChild(c); setTimeout(()=>c.remove(),4000); } }
+
+/* ---------- render: rewards ---------- */
+function renderRewards(){
+  const t=todayISO(); const total=starTotal();
+  let streak=0; for(const d of days()){ if(d.date>t) break; if(state.stars[d.date]) streak++; else streak=0; }
+  const watchedN=Object.keys(state.watched).filter(id=>findVideo(id)).length;
+  let h=`<div class="pagehead"><h1>🏆 我的獎勵</h1><span class="sub">每天看完任務影片 → 一顆星星</span></div>`;
+  h+=`<div class="stat"><div class="box"><b>${total} ⭐</b><span>本週星星</span></div><div class="box"><b>${streak} 🔥</b><span>連續天數</span></div><div class="box"><b>${watchedN} 🎬</b><span>看完的影片</span></div></div>`;
+  h+=`<div class="weekrow">${days().map(d=>`<div class="daycard ${state.stars[d.date]?'got':''} ${d.date===t?'today':''}"><div class="d">${esc(d.label)}</div><div class="dt">${fmtDate(d.date)}</div><div class="big">⭐</div><div class="small">${coreOf(d).filter(v=>state.watched[v.id]).length}/${coreOf(d).length} 任務</div></div>`).join('')}</div>`;
+  h+=`<h3 class="sec">🎁 獎勵階梯</h3><div class="ladder">${(glob.ladder||[]).map(l=>`<div class="rung ${total>=l.need?'ok':''}"><span class="need">${l.need} ⭐</span><span>${esc(l.text)}</span>${total>=l.need?'<span class="ok-t">已達成 ✓</span>':`<span class="ok-t" style="color:var(--muted)">還差 ${l.need-total} 顆</span>`}</div>`).join('')}</div>`;
+  document.getElementById('main').innerHTML=h;
+}
+
+/* ---------- render: channel ---------- */
+function renderChannel(){
+  const ch=allChannels().find(c=>c.channelId===route.ch); if(!ch){ go({page:'day'}); return; }
+  const uploads='UU'+ch.channelId.slice(2);
+  let h=`<div class="pagehead"><div class="chdot" style="width:52px;height:52px;font-size:22px;background:${ch.color||'#555'}">${esc(ch.name[0])}</div><h1>${esc(ch.name)}</h1><span class="sub">延伸頻道 · 自由觀賞（不計入星星）</span></div>
+  <div class="frame" style="max-width:960px"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=${esc(uploads)}&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+  <p class="small" style="margin-top:12px">播放器右上角可以展開頻道影片清單。頻道：youtube.com/${esc(ch.handle||'')}</p>`;
+  document.getElementById('main').innerHTML=h;
+}
+
+/* ---------- render root ---------- */
+function render(){
+  if(route.page!=='watch') destroyPlayer();
+  renderNav();
+  ({day:renderDay, watch:renderWatch, rewards:renderRewards, channel:renderChannel}[route.page]||renderDay)();
+}
+
+/* ---------- parent mode ---------- */
+document.getElementById('gearBtn').onclick=openPin;
+document.getElementById('logoBtn').onclick=()=>go({page:'day',date:defaultDay()});
+function openPin(){
+  const m=document.createElement('div'); m.className='modal';
+  m.innerHTML=`<div class="box" style="width:360px;text-align:center"><h2>家長設定 🔒</h2><p class="small">請輸入 4 位數 PIN</p><input class="pin" id="pinIn" type="password" inputmode="numeric" maxlength="4" autofocus><div class="frow" style="justify-content:center;margin-top:14px"><button class="btn" id="pinCancel">取消</button><button class="btn primary" id="pinOk">進入</button></div></div>`;
+  document.body.appendChild(m);
+  const inp=m.querySelector('#pinIn'); inp.focus();
+  const ok=()=>{ if(inp.value===(glob.pin||'1234')){ m.remove(); openParent(); } else { inp.value=''; toast('PIN 不正確'); } };
+  m.querySelector('#pinOk').onclick=ok; inp.onkeydown=e=>{ if(e.key==='Enter') ok(); }; m.querySelector('#pinCancel').onclick=()=>m.remove();
+}
+function parseYT(u){ u=(u||'').trim(); if(/^[\w-]{11}$/.test(u)) return u; const m=u.match(/(?:v=|youtu\.be\/|\/embed\/|\/shorts\/)([\w-]{11})/); return m?m[1]:null; }
+function openParent(){
+  const m=document.createElement('div'); m.className='modal'; document.body.appendChild(m);
+  const draw=()=>{
+    const dayOpts=days().map(d=>`<option value="${d.date}">${esc(d.label)} ${fmtDate(d.date)}</option>`).join('');
+    const subjOpts=Object.keys(SUBJ).map(s=>`<option>${s}</option>`).join('');
+    const allV=[]; for(const d of BASE_WEEK.days){ for(const v of d.videos) allV.push({...v,date:d.date,base:true}); } for(const a of state.added) allV.push({...a,base:false});
+    m.innerHTML=`<div class="box">
+      <div style="display:flex;align-items:center"><h2 style="margin:0">⚙️ 家長後台</h2><div class="spacer"></div><button class="btn" id="pClose">關閉</button></div>
+      <p class="small">本週：${esc(BASE_WEEK.weekStart)} ～ ${esc(BASE_WEEK.weekEnd)}　來源：${esc(BASE_WEEK.source||'')}</p>
+
+      <h3>➕ 新增影片到某一天</h3>
+      <div class="frow"><input type="url" id="aUrl" placeholder="貼上 YouTube 網址或影片 ID"><select id="aDay">${dayOpts}</select><select id="aSubj">${subjOpts}</select></div>
+      <div class="frow"><input type="text" id="aTitle" placeholder="標題（留空會自動抓）"><input type="text" id="aCh" placeholder="頻道（可留空）" style="min-width:160px"><input type="text" id="aNote" placeholder="給孩子的小提示（可留空）"><label><input type="checkbox" id="aCore"> 列為今日任務</label><button class="btn primary" id="aAdd">新增</button></div>
+
+      <h3>🎬 本週影片（勾選＝已看完；🙈＝暫時隱藏）</h3>
+      <div class="vlist">${allV.map(v=>`<div class="row ${state.hidden[v.id]?'hid':''}"><input type="checkbox" data-w="${esc(v.id)}" ${state.watched[v.id]?'checked':''}><span class="small" style="min-width:52px">${fmtDate(v.date)}</span><span class="small" style="min-width:64px">${esc(v.subject)}</span><span class="t" title="${esc(v.title)}">${v.core?'📌 ':''}${esc(v.title)}</span><button class="btn" style="padding:2px 8px;font-size:12px" data-h="${esc(v.id)}">${state.hidden[v.id]?'顯示':'🙈'}</button>${v.base?'':`<button class="btn" style="padding:2px 8px;font-size:12px" data-del="${esc(v.id)}">刪除</button>`}</div>`).join('')}</div>
+
+      <h3>📺 延伸頻道</h3>
+      <div class="frow"><input type="text" id="cName" placeholder="頻道名稱" style="min-width:140px"><input type="text" id="cId" placeholder="頻道 ID（UC 開頭 24 碼）" style="min-width:260px"><input type="color" id="cColor" value="#546e7a"><button class="btn primary" id="cAdd">新增頻道</button></div>
+      <div class="small">目前：${allChannels().map(c=>esc(c.name)).join('、')}　<span class="small">（找頻道 ID：頻道頁 → 更多 → 分享頻道 → 複製頻道 ID）</span></div>
+      ${(glob.channels||[]).length?`<div class="frow">${glob.channels.map((c,i)=>`<button class="btn" data-cdel="${i}">移除 ${esc(c.name)}</button>`).join('')}</div>`:''}
+
+      <h3>🎁 獎勵階梯</h3>
+      ${(glob.ladder||[]).map((l,i)=>`<div class="frow"><input type="number" min="1" max="5" value="${l.need}" data-ln="${i}" style="width:70px"> ⭐ <input type="text" value="${esc(l.text)}" data-lt="${i}" style="min-width:320px"></div>`).join('')}
+      <div class="frow"><button class="btn" id="ladderSave">儲存獎勵</button><span class="small">星星數相同會在領星時立刻彈出獎勵畫面</span></div>
+
+      <h3>🔧 其他設定</h3>
+      <div class="frow"><label>名稱 <input type="text" id="gBrand" value="${esc(glob.brand||'Kai TV')}" style="min-width:120px"></label><label>PIN <input type="text" id="gPin" value="${esc(glob.pin||'1234')}" maxlength="4" style="width:80px"></label><label>看完判定 <select id="gThr">${[0.8,0.9,0.95,1].map(x=>`<option value="${x}" ${(glob.threshold||0.9)==x?'selected':''}>${Math.round(x*100)}%</option>`).join('')}</select></label><button class="btn" id="gSave">儲存</button></div>
+      <div class="frow"><button class="btn" id="expBtn">📤 匯出本週設定 JSON</button><button class="btn red" id="resetBtn">🧹 重設本週進度（星星與觀看紀錄）</button></div>
+      <textarea id="expOut" class="hidden" readonly></textarea>
+    </div>`;
+    m.querySelector('#pClose').onclick=()=>{ m.remove(); render(); };
+    m.querySelector('#aAdd').onclick=async()=>{
+      const id=parseYT(m.querySelector('#aUrl').value); if(!id){ toast('看不懂這個網址'); return; }
+      let title=m.querySelector('#aTitle').value.trim(), ch=m.querySelector('#aCh').value.trim();
+      if(!title||!ch){ try{ const r=await fetch('https://noembed.com/embed?url=https://www.youtube.com/watch?v='+id); const j=await r.json(); title=title||j.title||id; ch=ch||j.author_name||''; }catch(e){ title=title||id; } }
+      state.added.push({id,date:m.querySelector('#aDay').value,subject:m.querySelector('#aSubj').value,title,channel:ch,note:m.querySelector('#aNote').value.trim(),core:m.querySelector('#aCore').checked,len:''});
+      save(); toast('已新增'); draw();
+    };
+    m.querySelectorAll('[data-w]').forEach(e=>e.onchange=()=>{ if(e.checked) state.watched[e.dataset.w]=true; else delete state.watched[e.dataset.w]; save(); });
+    m.querySelectorAll('[data-h]').forEach(e=>e.onclick=()=>{ if(state.hidden[e.dataset.h]) delete state.hidden[e.dataset.h]; else state.hidden[e.dataset.h]=true; save(); draw(); });
+    m.querySelectorAll('[data-del]').forEach(e=>e.onclick=()=>{ state.added=state.added.filter(a=>a.id!==e.dataset.del); save(); draw(); });
+    m.querySelector('#cAdd').onclick=()=>{ const n=m.querySelector('#cName').value.trim(), id=m.querySelector('#cId').value.trim(); if(!n||!/^UC[\w-]{22}$/.test(id)){ toast('請輸入名稱與正確的頻道 ID'); return; } glob.channels=glob.channels||[]; glob.channels.push({name:n,channelId:id,color:m.querySelector('#cColor').value,handle:''}); save(); draw(); };
+    m.querySelectorAll('[data-cdel]').forEach(e=>e.onclick=()=>{ glob.channels.splice(+e.dataset.cdel,1); save(); draw(); });
+    m.querySelector('#ladderSave').onclick=()=>{ glob.ladder=(glob.ladder||[]).map((l,i)=>({need:+m.querySelector(`[data-ln="${i}"]`).value||l.need,text:m.querySelector(`[data-lt="${i}"]`).value})); save(); toast('獎勵已儲存'); };
+    m.querySelector('#gSave').onclick=()=>{ glob.brand=m.querySelector('#gBrand').value.trim()||'Kai TV'; const p=m.querySelector('#gPin').value.trim(); if(/^\d{4}$/.test(p)) glob.pin=p; glob.threshold=+m.querySelector('#gThr').value; save(); renderNav(); toast('已儲存'); };
+    m.querySelector('#expBtn').onclick=()=>{ const out=m.querySelector('#expOut'); out.classList.remove('hidden'); out.value=JSON.stringify({week:BASE_WEEK.weekStart,progress:state,settings:glob},null,2); out.select(); try{ document.execCommand('copy'); toast('已複製到剪貼簿'); }catch(e){} };
+    m.querySelector('#resetBtn').onclick=()=>{ if(m.querySelector('#resetBtn').dataset.sure){ state.watched={}; state.stars={}; state.claimedDates={}; save(); toast('已重設'); draw(); } else { m.querySelector('#resetBtn').dataset.sure='1'; m.querySelector('#resetBtn').textContent='再按一次確認重設'; } };
+  };
+  draw();
+}
+
+render();
+</script>
+</body>
+</html>

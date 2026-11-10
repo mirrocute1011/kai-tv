@@ -1,0 +1,8 @@
+{
+  "channels": [
+    {"name":"Numberblocks","handle":"numberblocks","channelId":"UC_qs3c0ehDvZkbiEbOj6Drg","subject":"Maths","color":"#ff7a00"},
+    {"name":"Blippi","handle":"@Blippi","channelId":"UCx3RchaoRFpDpB60x7xRREw","subject":"Global","color":"#1e88e5"},
+    {"name":"樂樂TV","handle":"@XIAOXINGXING-樂樂TV","channelId":"UCtWocEKhgpEffPDlwwozK9Q","subject":"Science","color":"#43a047"},
+    {"name":"Alphablocks","handle":"@officialalphablocks","channelId":"UC0fXNmjDoC7ckPyT6qM8Urw","subject":"ESL","color":"#e53935"}
+  ]
+}
