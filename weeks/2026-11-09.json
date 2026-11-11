@@ -7,76 +7,396 @@
     {
       "date": "2026-11-09",
       "label": "星期一",
-      "topics": ["ESL 4.4 Past simple", "Maths 5.2 Subtraction", "Tiếng Việt Bài 51 et êt it", "Music"],
+      "topics": [
+        "ESL 4.4 Past simple",
+        "Maths 5.2 Subtraction",
+        "Tiếng Việt Bài 51 et êt it",
+        "Music"
+      ],
       "videos": [
-        {"id":"jxl28KQOHy4","subject":"ESL","title":"Adding '-ed' | Past Tense Verbs","channel":"Nessy","len":"2:18","core":true,"note":"過去式規則動詞加 -ed"},
-        {"id":"KAsacxmPh1Q","subject":"ESL","title":"I Was, You Were (To Be Past Simple Song)","channel":"Rockin' English","len":"1:23","core":true,"note":"was / were"},
-        {"id":"oDh2zkJW7ko","subject":"Maths","title":"Subtract by Ten: The Ones Stay the Same!","channel":"Mr. R.'s Songs for Teaching","len":"3:11","core":true,"note":"兩位數減十位"},
-        {"id":"lylG2mvTHC0","subject":"Tiếng Việt","title":"Tiếng Việt lớp 1 Kết nối tri thức Bài 51: et êt it","channel":"Lớp Cô Giang","len":"17:17","core":true},
-        {"id":"IYLTc3tGdzc","subject":"Music","title":"Au clair de la lune","channel":"Comptines et chansons","len":"2:14","core":true,"note":"音樂課：左手練習曲"},
-        {"id":"LFY7CK0V8ak","subject":"Maths","title":"Subtraction Somersaults | Numberblocks S8 E14","channel":"Numberblocks","len":"4:30","core":false},
-        {"id":"pLHSPrJUx4s","subject":"Music","title":"Thương Lắm Thầy Cô Ơi","channel":"Bé Phan Hiếu Kiên","len":"4:43","core":false,"note":"複習歌曲"},
-        {"id":"nkWa-2Q1DK4","subject":"Music","title":"Ước Mơ Hồng (Phạm Trọng Cầu)","channel":"Minh Duc Vu Official","len":"3:12","core":false,"note":"音樂課聆聽曲"},
-        {"id":"IsmTWL9nz8c","subject":"Music","title":"Luyện thanh với nốt Mi | LÀ LA LÁ","channel":"VTV7 KIDS","len":"2:35","core":false,"note":"Mi 在五線譜的位置"},
-        {"id":"BzvoBtMGtBs","subject":"Toán","title":"Toán lớp 1 KNTT Bài 11: Phép trừ trong phạm vi 10 (Tiết 1)","channel":"CÔ THU","len":"11:56","core":false}
+        {
+          "id": "jxl28KQOHy4",
+          "subject": "ESL",
+          "title": "Adding '-ed' | Past Tense Verbs",
+          "channel": "Nessy",
+          "len": "2:18",
+          "core": true,
+          "note": "過去式規則動詞加 -ed"
+        },
+        {
+          "id": "KAsacxmPh1Q",
+          "subject": "ESL",
+          "title": "I Was, You Were (To Be Past Simple Song)",
+          "channel": "Rockin' English",
+          "len": "1:23",
+          "core": true,
+          "note": "was / were"
+        },
+        {
+          "id": "oDh2zkJW7ko",
+          "subject": "Maths",
+          "title": "Subtract by Ten: The Ones Stay the Same!",
+          "channel": "Mr. R.'s Songs for Teaching",
+          "len": "3:11",
+          "core": true,
+          "note": "兩位數減十位"
+        },
+        {
+          "id": "lylG2mvTHC0",
+          "subject": "Tiếng Việt",
+          "title": "Tiếng Việt lớp 1 Kết nối tri thức Bài 51: et êt it",
+          "channel": "Lớp Cô Giang",
+          "len": "17:17",
+          "core": true
+        },
+        {
+          "id": "IYLTc3tGdzc",
+          "subject": "Music",
+          "title": "Au clair de la lune",
+          "channel": "Comptines et chansons",
+          "len": "2:14",
+          "core": true,
+          "note": "音樂課：左手練習曲"
+        },
+        {
+          "id": "LFY7CK0V8ak",
+          "subject": "Maths",
+          "title": "Subtraction Somersaults | Numberblocks S8 E14",
+          "channel": "Numberblocks",
+          "len": "4:30",
+          "core": false
+        },
+        {
+          "id": "pLHSPrJUx4s",
+          "subject": "Music",
+          "title": "Thương Lắm Thầy Cô Ơi",
+          "channel": "Bé Phan Hiếu Kiên",
+          "len": "4:43",
+          "core": false,
+          "note": "複習歌曲"
+        },
+        {
+          "id": "nkWa-2Q1DK4",
+          "subject": "Music",
+          "title": "Ước Mơ Hồng (Phạm Trọng Cầu)",
+          "channel": "Minh Duc Vu Official",
+          "len": "3:12",
+          "core": false,
+          "note": "音樂課聆聽曲"
+        },
+        {
+          "id": "IsmTWL9nz8c",
+          "subject": "Music",
+          "title": "Luyện thanh với nốt Mi | LÀ LA LÁ",
+          "channel": "VTV7 KIDS",
+          "len": "2:35",
+          "core": false,
+          "note": "Mi 在五線譜的位置"
+        },
+        {
+          "id": "BzvoBtMGtBs",
+          "subject": "Toán",
+          "title": "Toán lớp 1 KNTT Bài 11: Phép trừ trong phạm vi 10 (Tiết 1)",
+          "channel": "CÔ THU",
+          "len": "11:56",
+          "core": false
+        }
       ]
     },
     {
       "date": "2026-11-10",
       "label": "星期二",
-      "topics": ["Science 3.2 Properties of materials", "Global 2.4 Posters with a message", "Tiếng Việt Bài 52 ut ưt"],
+      "topics": [
+        "Science 3.2 Properties of materials",
+        "Global 2.4 Posters with a message",
+        "Tiếng Việt Bài 52 ut ưt"
+      ],
       "videos": [
-        {"id":"340MmuY_osY","subject":"Science","title":"Materials And Their Properties","channel":"ClickView","len":"3:58","core":true,"note":"材料的特性"},
-        {"id":"JpUIytR9Aes","subject":"Science","title":"Absorbent and Non-absorbent Materials","channel":"Pants Bear Kids","len":"2:13","core":true,"note":"absorbent 吸水"},
-        {"id":"0xTyKc6LGdY","subject":"Global","title":"Garbage Trucks for Children with Blippi | Learn About Recycling","channel":"Blippi","len":"13:15","core":true,"note":"回收 recycling / rubbish"},
-        {"id":"6hNlNFzNV9M","subject":"Tiếng Việt","title":"Tiếng Việt lớp 1 Kết nối tri thức Bài 52: ut ưt","channel":"Lớp Cô Giang","len":"15:59","core":true},
-        {"id":"AOvcW8l3RzE","subject":"Global","title":"Reduce Reuse Recycle Song for Kids","channel":"The Kiboomers","len":"1:17","core":false},
-        {"id":"5V3ap8QrLJg","subject":"Global","title":"The Reduce, Reuse and Recycle SONG | 3 R's for Kids","channel":"GenerationGenius","len":"1:12","core":false},
-        {"id":"kbrlBPw613Q","subject":"Global","title":"我們是玩具製造王｜廢物利用當個小Maker吧！","channel":"樂樂TV","len":"6:59","core":false,"note":"廢物利用做海報／手作"}
+        {
+          "id": "340MmuY_osY",
+          "subject": "Science",
+          "title": "Materials And Their Properties",
+          "channel": "ClickView",
+          "len": "3:58",
+          "core": true,
+          "note": "材料的特性"
+        },
+        {
+          "id": "JpUIytR9Aes",
+          "subject": "Science",
+          "title": "Absorbent and Non-absorbent Materials",
+          "channel": "Pants Bear Kids",
+          "len": "2:13",
+          "core": true,
+          "note": "absorbent 吸水"
+        },
+        {
+          "id": "0xTyKc6LGdY",
+          "subject": "Global",
+          "title": "Garbage Trucks for Children with Blippi | Learn About Recycling",
+          "channel": "Blippi",
+          "len": "13:15",
+          "core": true,
+          "note": "回收 recycling / rubbish"
+        },
+        {
+          "id": "6hNlNFzNV9M",
+          "subject": "Tiếng Việt",
+          "title": "Tiếng Việt lớp 1 Kết nối tri thức Bài 52: ut ưt",
+          "channel": "Lớp Cô Giang",
+          "len": "15:59",
+          "core": true
+        },
+        {
+          "id": "AOvcW8l3RzE",
+          "subject": "Global",
+          "title": "Reduce Reuse Recycle Song for Kids",
+          "channel": "The Kiboomers",
+          "len": "1:17",
+          "core": false
+        },
+        {
+          "id": "5V3ap8QrLJg",
+          "subject": "Global",
+          "title": "The Reduce, Reuse and Recycle SONG | 3 R's for Kids",
+          "channel": "GenerationGenius",
+          "len": "1:12",
+          "core": false
+        },
+        {
+          "id": "kbrlBPw613Q",
+          "subject": "Global",
+          "title": "我們是玩具製造王｜廢物利用當個小Maker吧！",
+          "channel": "樂樂TV",
+          "len": "6:59",
+          "core": false,
+          "note": "廢物利用做海報／手作"
+        }
       ]
     },
     {
       "date": "2026-11-11",
       "label": "星期三",
-      "topics": ["ESL 4.4 Past simple", "Maths 5.2 Subtraction", "Science 3.2 Properties of materials", "Tiếng Việt Bài 53 ap ăp âp"],
+      "topics": [
+        "ESL 4.4 Past simple",
+        "Maths 5.2 Subtraction",
+        "Science 3.2 Properties of materials",
+        "Tiếng Việt Bài 53 ap ăp âp"
+      ],
       "videos": [
-        {"id":"gf7OdFHCYfo","subject":"ESL","title":"Present - Past Song | Past Tense Verbs","channel":"Fox English","len":"1:34","core":true},
-        {"id":"Ds226Vh7epg","subject":"Maths","title":"Grade 2 Math: Subtraction Rocks with Base Ten Blocks","channel":"Virtual Elementary School","len":"2:27","core":true,"note":"十位／個位積木減法"},
-        {"id":"1UUROogwl24","subject":"Science","title":"Properties of Materials for Kids: Strength, Rigidity, Flexibility…","channel":"Smile and Learn","len":"6:14","core":true,"note":"rigid / flexible / strong / weak"},
-        {"id":"bV0ODVjUHtI","subject":"Tiếng Việt","title":"Tiếng Việt lớp 1 Kết nối tri thức Bài 53: ap ăp âp","channel":"Lớp Cô Giang","len":"18:37","core":true},
-        {"id":"0b4rsDuzThE","subject":"ESL","title":"Learn Past Tense Verbs #1 - Pattern Practice","channel":"ELF Kids Videos","len":"1:54","core":false},
-        {"id":"zau4jtSA_kY","subject":"Maths","title":"10 More, 10 Less | Math Song for Kids","channel":"Jack Hartmann","len":"3:06","core":false},
-        {"id":"GH29VWIPyfg","subject":"Science","title":"Understanding Venn Diagrams - 1st Grade","channel":"Boddle Learning","len":"3:48","core":false,"note":"Venn diagram 分類"}
+        {
+          "id": "gf7OdFHCYfo",
+          "subject": "ESL",
+          "title": "Present - Past Song | Past Tense Verbs",
+          "channel": "Fox English",
+          "len": "1:34",
+          "core": true
+        },
+        {
+          "id": "Ds226Vh7epg",
+          "subject": "Maths",
+          "title": "Grade 2 Math: Subtraction Rocks with Base Ten Blocks",
+          "channel": "Virtual Elementary School",
+          "len": "2:27",
+          "core": true,
+          "note": "十位／個位積木減法"
+        },
+        {
+          "id": "1UUROogwl24",
+          "subject": "Science",
+          "title": "Properties of Materials for Kids: Strength, Rigidity, Flexibility…",
+          "channel": "Smile and Learn",
+          "len": "6:14",
+          "core": true,
+          "note": "rigid / flexible / strong / weak"
+        },
+        {
+          "id": "bV0ODVjUHtI",
+          "subject": "Tiếng Việt",
+          "title": "Tiếng Việt lớp 1 Kết nối tri thức Bài 53: ap ăp âp",
+          "channel": "Lớp Cô Giang",
+          "len": "18:37",
+          "core": true
+        },
+        {
+          "id": "0b4rsDuzThE",
+          "subject": "ESL",
+          "title": "Learn Past Tense Verbs #1 - Pattern Practice",
+          "channel": "ELF Kids Videos",
+          "len": "1:54",
+          "core": false
+        },
+        {
+          "id": "zau4jtSA_kY",
+          "subject": "Maths",
+          "title": "10 More, 10 Less | Math Song for Kids",
+          "channel": "Jack Hartmann",
+          "len": "3:06",
+          "core": false
+        },
+        {
+          "id": "GH29VWIPyfg",
+          "subject": "Science",
+          "title": "Understanding Venn Diagrams - 1st Grade",
+          "channel": "Boddle Learning",
+          "len": "3:48",
+          "core": false,
+          "note": "Venn diagram 分類"
+        }
       ]
     },
     {
       "date": "2026-11-12",
       "label": "星期四",
-      "topics": ["ESL 4.4 Past simple", "Science 3.2 Properties of materials", "Maths 5.2 Subtraction", "Tiếng Việt Bài 54–55 + Kể chuyện"],
+      "topics": [
+        "ESL 4.4 Past simple",
+        "Science 3.2 Properties of materials",
+        "Maths 5.2 Subtraction",
+        "Tiếng Việt Bài 54–55 + Kể chuyện"
+      ],
       "videos": [
-        {"id":"t-y9Y9kvUxk","subject":"ESL","title":"The Past Tense Song","channel":"Teacher Ham","len":"2:06","core":true},
-        {"id":"I03Jx9pIeUs","subject":"ESL","title":"Was and Were Song | Learn English Past Tense","channel":"ABC Buddies","len":"3:16","core":true},
-        {"id":"gbb2W-rrYik","subject":"Maths","title":"2-digit subtract 1-digit | Column Subtraction","channel":"Maths with Mrs B.","len":"4:39","core":true,"note":"直式減法 column subtraction"},
-        {"id":"lTcWiBy0mqk","subject":"Tiếng Việt","title":"Tiếng Việt lớp 1 Kết nối tri thức Bài 54: op ôp ơp","channel":"Lớp Cô Giang","len":"19:58","core":true},
-        {"id":"mhb_M_8J9jU","subject":"Tiếng Việt","title":"Mật Ong Của Gấu Con | Kể chuyện lớp 1 (Hoạt hình 3D)","channel":"Trang Sách Tuổi Thơ","len":"4:11","core":true,"note":"Bài 55 Kể chuyện"},
-        {"id":"489srqkdgMQ","subject":"Maths","title":"Master 2-Digit Column Subtraction in Minutes!","channel":"Maths with Mrs B.","len":"3:04","core":false},
-        {"id":"TGXIZIe3Nzc","subject":"Maths","title":"Learn Subtraction | 30 Minutes of Subtraction!","channel":"Numberblocks","len":"31:38","core":false}
+        {
+          "id": "t-y9Y9kvUxk",
+          "subject": "ESL",
+          "title": "The Past Tense Song",
+          "channel": "Teacher Ham",
+          "len": "2:06",
+          "core": true
+        },
+        {
+          "id": "I03Jx9pIeUs",
+          "subject": "ESL",
+          "title": "Was and Were Song | Learn English Past Tense",
+          "channel": "ABC Buddies",
+          "len": "3:16",
+          "core": true
+        },
+        {
+          "id": "gbb2W-rrYik",
+          "subject": "Maths",
+          "title": "2-digit subtract 1-digit | Column Subtraction",
+          "channel": "Maths with Mrs B.",
+          "len": "4:39",
+          "core": true,
+          "note": "直式減法 column subtraction"
+        },
+        {
+          "id": "lTcWiBy0mqk",
+          "subject": "Tiếng Việt",
+          "title": "Tiếng Việt lớp 1 Kết nối tri thức Bài 54: op ôp ơp",
+          "channel": "Lớp Cô Giang",
+          "len": "19:58",
+          "core": true
+        },
+        {
+          "id": "mhb_M_8J9jU",
+          "subject": "Tiếng Việt",
+          "title": "Mật Ong Của Gấu Con | Kể chuyện lớp 1 (Hoạt hình 3D)",
+          "channel": "Trang Sách Tuổi Thơ",
+          "len": "4:11",
+          "core": true,
+          "note": "Bài 55 Kể chuyện"
+        },
+        {
+          "id": "489srqkdgMQ",
+          "subject": "Maths",
+          "title": "Master 2-Digit Column Subtraction in Minutes!",
+          "channel": "Maths with Mrs B.",
+          "len": "3:04",
+          "core": false
+        },
+        {
+          "id": "TGXIZIe3Nzc",
+          "subject": "Maths",
+          "title": "Learn Subtraction | 30 Minutes of Subtraction!",
+          "channel": "Numberblocks",
+          "len": "31:38",
+          "core": false
+        }
       ]
     },
     {
       "date": "2026-11-13",
       "label": "星期五",
-      "topics": ["ESL 4.5 Long i", "Toán Bài 11 Phép trừ trong phạm vi 10", "TN&XH Bài 10", "HĐTN Kính yêu thầy cô", "Robotics Bí mật đại dương"],
+      "topics": [
+        "ESL 4.5 Long i",
+        "Toán Bài 11 Phép trừ trong phạm vi 10",
+        "TN&XH Bài 10",
+        "HĐTN Kính yêu thầy cô",
+        "Robotics Bí mật đại dương"
+      ],
       "videos": [
-        {"id":"U60sOQxbO4I","subject":"ESL","title":"Long Vowel Letter i - ie / i-e / igh / y - Phonics Song","channel":"English4abc","len":"2:54","core":true,"note":"night / kite / fly / cry"},
-        {"id":"yuSHxrSNB8o","subject":"ESL","title":"Alphablocks - Long Vowels: Long I","channel":"Alphablocks","len":"4:42","core":true},
-        {"id":"BlnP_uVAc7c","subject":"Toán","title":"Toán lớp 1 KNTT Bài 11 Tiết 2: Phép trừ trong phạm vi 10","channel":"Lớp Cô Giang","len":"15:50","core":true},
-        {"id":"UeOGw2ehdbk","subject":"TN&XH","title":"TNXH lớp 1 - Bài 10 Cùng khám phá quang cảnh xung quanh","channel":"10 Phút Học Bài TV","len":"14:04","core":true},
-        {"id":"_yOevzjtNA4","subject":"ESL","title":"Long Vowel Sounds | ie, igh | Phonics Songs and Stories","channel":"Little Fox","len":"3:39","core":false},
-        {"id":"e6I6rAIPTuI","subject":"Robotics","title":"海洋怎麼被汙染？台中科博館探險","channel":"樂樂TV","len":"14:52","core":false,"note":"Robotics：Bí mật đại dương 海洋的秘密"},
-        {"id":"9xF6xhNKp18","subject":"Robotics","title":"為什麼大海看起來是藍色的？","channel":"樂樂TV","len":"2:25","core":false},
-        {"id":"vUncBbbJSiM","subject":"Music","title":"7 NỐT NHẠC ở vị trí nào trong KHUÔNG NHẠC? | LÀ LA LÁ","channel":"VTV7 KIDS","len":"3:01","core":false}
+        {
+          "id": "U60sOQxbO4I",
+          "subject": "ESL",
+          "title": "Long Vowel Letter i - ie / i-e / igh / y - Phonics Song",
+          "channel": "English4abc",
+          "len": "2:54",
+          "core": true,
+          "note": "night / kite / fly / cry"
+        },
+        {
+          "id": "yuSHxrSNB8o",
+          "subject": "ESL",
+          "title": "Alphablocks - Long Vowels: Long I",
+          "channel": "Alphablocks",
+          "len": "4:42",
+          "core": true
+        },
+        {
+          "id": "BlnP_uVAc7c",
+          "subject": "Toán",
+          "title": "Toán lớp 1 KNTT Bài 11 Tiết 2: Phép trừ trong phạm vi 10",
+          "channel": "Lớp Cô Giang",
+          "len": "15:50",
+          "core": true
+        },
+        {
+          "id": "UeOGw2ehdbk",
+          "subject": "TN&XH",
+          "title": "TNXH lớp 1 - Bài 10 Cùng khám phá quang cảnh xung quanh",
+          "channel": "10 Phút Học Bài TV",
+          "len": "14:04",
+          "core": true
+        },
+        {
+          "id": "_yOevzjtNA4",
+          "subject": "ESL",
+          "title": "Long Vowel Sounds | ie, igh | Phonics Songs and Stories",
+          "channel": "Little Fox",
+          "len": "3:39",
+          "core": false
+        },
+        {
+          "id": "e6I6rAIPTuI",
+          "subject": "Robotics",
+          "title": "海洋怎麼被汙染？台中科博館探險",
+          "channel": "樂樂TV",
+          "len": "14:52",
+          "core": false,
+          "note": "Robotics：Bí mật đại dương 海洋的秘密"
+        },
+        {
+          "id": "9xF6xhNKp18",
+          "subject": "Robotics",
+          "title": "為什麼大海看起來是藍色的？",
+          "channel": "樂樂TV",
+          "len": "2:25",
+          "core": false
+        },
+        {
+          "id": "vUncBbbJSiM",
+          "subject": "Music",
+          "title": "7 NỐT NHẠC ở vị trí nào trong KHUÔNG NHẠC? | LÀ LA LÁ",
+          "channel": "VTV7 KIDS",
+          "len": "3:01",
+          "core": false
+        }
       ]
     }
+  ],
+  "completed": [
+    "2026-11-09",
+    "2026-11-10"
   ]
 }

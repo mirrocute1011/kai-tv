@@ -209,6 +209,12 @@ function load(k,d){ try{ return Object.assign({}, d, JSON.parse(localStorage.get
 let state = load(LS_KEY, {watched:{}, stars:{}, hidden:{}, added:[], claimedDates:{}});
 let glob  = load(LS_GLOBAL, {pin:'1234', ladder:DEFAULT_LADDER, channels:[], brand:'Kai TV', threshold:0.9});
 if(!Array.isArray(state.added)) state.added=[];
+// 課表 JSON 可預先標記整天完成（家長補登），所有裝置載入時套用，不會覆蓋既有進度
+(function seed(){ const done=BASE_WEEK.completed||[]; let ch=false;
+  for(const d of BASE_WEEK.days){ if(!done.includes(d.date)) continue;
+    for(const v of d.videos){ if(v.core&&!state.watched[v.id]){ state.watched[v.id]=true; ch=true; } }
+    if(!state.stars[d.date]){ state.stars[d.date]=true; state.claimedDates[d.date]=state.claimedDates[d.date]||'seeded'; ch=true; } }
+  if(ch) save(); })();
 function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); localStorage.setItem(LS_GLOBAL, JSON.stringify(glob)); }
 
 /* ---------- derived data ---------- */
@@ -434,6 +440,10 @@ function openParent(){
 
       <h3>🔧 其他設定</h3>
       <div class="frow"><label>名稱 <input type="text" id="gBrand" value="${esc(glob.brand||'Kai TV')}" style="min-width:120px"></label><label>PIN <input type="text" id="gPin" value="${esc(glob.pin||'1234')}" maxlength="4" style="width:80px"></label><label>看完判定 <select id="gThr">${[0.8,0.9,0.95,1].map(x=>`<option value="${x}" ${(glob.threshold||0.9)==x?'selected':''}>${Math.round(x*100)}%</option>`).join('')}</select></label><button class="btn" id="gSave">儲存</button></div>
+      <h3>🔁 跨裝置同步（同步碼）</h3>
+      <p class="small">星星與觀看紀錄存在各裝置的瀏覽器裡，彼此不互通。要把進度帶到另一台：這裡「複製同步碼」→ 到另一台的家長後台貼上「匯入」。匯入採合併（只增不減）。</p>
+      <div class="frow"><button class="btn primary" id="syncOut">📋 複製同步碼</button><input type="text" id="syncIn" placeholder="貼上另一台的同步碼" style="min-width:300px"><button class="btn" id="syncApply">匯入合併</button></div>
+      <div class="frow"><span class="small">整天補登：</span>${days().map(d=>`<button class="btn" data-dayall="${d.date}">${esc(d.label)} 全部完成</button>`).join('')}</div>
       <div class="frow"><button class="btn" id="expBtn">📤 匯出本週設定 JSON</button><button class="btn red" id="resetBtn">🧹 重設本週進度（星星與觀看紀錄）</button></div>
       <textarea id="expOut" class="hidden" readonly></textarea>
     </div>`;
@@ -452,6 +462,9 @@ function openParent(){
     m.querySelectorAll('[data-cdel]').forEach(e=>e.onclick=()=>{ glob.channels.splice(+e.dataset.cdel,1); save(); draw(); });
     m.querySelector('#ladderSave').onclick=()=>{ glob.ladder=(glob.ladder||[]).map((l,i)=>({need:+m.querySelector(`[data-ln="${i}"]`).value||l.need,text:m.querySelector(`[data-lt="${i}"]`).value})); save(); toast('獎勵已儲存'); };
     m.querySelector('#gSave').onclick=()=>{ glob.brand=m.querySelector('#gBrand').value.trim()||'Kai TV'; const p=m.querySelector('#gPin').value.trim(); if(/^\d{4}$/.test(p)) glob.pin=p; glob.threshold=+m.querySelector('#gThr').value; save(); renderNav(); toast('已儲存'); };
+    m.querySelector('#syncOut').onclick=async()=>{ const code=btoa(unescape(encodeURIComponent(JSON.stringify({w:BASE_WEEK.weekStart,watched:state.watched,stars:state.stars})))); try{ await navigator.clipboard.writeText(code); toast('同步碼已複製'); }catch(e){ const out=m.querySelector('#expOut'); out.classList.remove('hidden'); out.value=code; out.select(); toast('請手動複製下方文字'); } };
+    m.querySelector('#syncApply').onclick=()=>{ try{ const j=JSON.parse(decodeURIComponent(escape(atob(m.querySelector('#syncIn').value.trim())))); if(j.w!==BASE_WEEK.weekStart){ toast('這是別週的同步碼'); return; } Object.assign(state.watched,j.watched||{}); Object.assign(state.stars,j.stars||{}); save(); toast('已合併'); draw(); renderNav(); }catch(e){ toast('同步碼格式不正確'); } };
+    m.querySelectorAll('[data-dayall]').forEach(e=>e.onclick=()=>{ const d=days().find(x=>x.date===e.dataset.dayall); for(const v of d.videos) if(v.core) state.watched[v.id]=true; state.stars[d.date]=true; state.claimedDates[d.date]=state.claimedDates[d.date]||new Date().toISOString(); save(); toast(d.label+' 已標記完成'); draw(); renderNav(); });
     m.querySelector('#expBtn').onclick=()=>{ const out=m.querySelector('#expOut'); out.classList.remove('hidden'); out.value=JSON.stringify({week:BASE_WEEK.weekStart,progress:state,settings:glob},null,2); out.select(); try{ document.execCommand('copy'); toast('已複製到剪貼簿'); }catch(e){} };
     m.querySelector('#resetBtn').onclick=()=>{ if(m.querySelector('#resetBtn').dataset.sure){ state.watched={}; state.stars={}; state.claimedDates={}; save(); toast('已重設'); draw(); } else { m.querySelector('#resetBtn').dataset.sure='1'; m.querySelector('#resetBtn').textContent='再按一次確認重設'; } };
   };
