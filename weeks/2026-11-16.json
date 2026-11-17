@@ -1,0 +1,78 @@
+{
+  "weekStart": "2026-11-16",
+  "weekEnd": "2026-11-20",
+  "className": "1A2",
+  "source": "WEEKLY REMINDER_1A2 (Week 12 test announcement + FINAL 1 REVISION GUIDE, 2026/11/13)",
+  "completed": [],
+  "days": [
+    {
+      "date": "2026-11-16",
+      "label": "星期一",
+      "topics": ["複習週", "Maths U4 Carroll diagrams & tally charts", "週三 18/11 數學 U4+5 小考"],
+      "videos": [
+        {"id":"tbXER6bLyu4","subject":"Maths","title":"Tally Marks Song","channel":"Eric Chandler","len":"2:42","core":true,"note":"畫記：第五劃要橫過去！"},
+        {"id":"x0Pn3mJUzZE","subject":"Maths","title":"Making Tally Charts","channel":"Matholia","len":"1:58","core":true,"note":"tally chart 怎麼做"},
+        {"id":"ZMSTC0jvdvc","subject":"Maths","title":"Carroll Diagrams - Quick Tips","channel":"Mrs Cook's Quick Tips","len":"2:45","core":true,"note":"Carroll diagram 分類"},
+        {"id":"zau4jtSA_kY","subject":"Maths","title":"10 More, 10 Less | Math Song for Kids","channel":"Jack Hartmann","len":"3:06","core":true,"note":"加十、減十"},
+        {"id":"zF_dBk8EPDk","subject":"Maths","title":"Data! | Mini Math Movies","channel":"Scratch Garden","len":"8:13","core":false},
+        {"id":"GH29VWIPyfg","subject":"Maths","title":"Understanding Venn Diagrams - 1st Grade","channel":"Boddle Learning","len":"3:48","core":false}
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "label": "星期二",
+      "topics": ["明天數學小考！", "Maths U5 Addition & Subtraction", "10s / 1s 直式", "應用題：加還是減？"],
+      "videos": [
+        {"id":"oDh2zkJW7ko","subject":"Maths","title":"Subtract by Ten: The Ones Stay the Same!","channel":"Mr. R.'s Songs for Teaching","len":"3:11","core":true,"note":"65 − 10 = 55"},
+        {"id":"gbb2W-rrYik","subject":"Maths","title":"2-digit subtract 1-digit | Column Subtraction","channel":"Maths with Mrs B.","len":"4:39","core":true,"note":"10s / 1s 直式寫法"},
+        {"id":"-iAQI5k-8cQ","subject":"Maths","title":"Addition & Subtraction Number Sentences Song","channel":"Numberock","len":"2:09","core":true,"note":"看題目寫算式"},
+        {"id":"C229LUk380Q","subject":"Maths","title":"Word Problems: Add or Subtract?","channel":"MightyOwl","len":"6:54","core":true,"note":"altogether / in total → 加；left / gives → 減"},
+        {"id":"Va_slzMjcgg","subject":"Maths","title":"Tally Charts Explained: Counting, Comparing & Total","channel":"IXL","len":"3:55","core":true},
+        {"id":"Ds226Vh7epg","subject":"Maths","title":"Subtraction Rocks with Base Ten Blocks","channel":"Virtual Elementary School","len":"2:27","core":false},
+        {"id":"a4FXl4zb3E4","subject":"Maths","title":"Place Value Song | Ones, Tens & Hundreds","channel":"Numberock","len":"3:55","core":false},
+        {"id":"7J1OkxuyLD0","subject":"Maths","title":"Adding & Subtracting! | Mini Math Movies","channel":"Scratch Garden","len":"7:27","core":false}
+      ]
+    },
+    {
+      "date": "2026-11-18",
+      "label": "星期三",
+      "topics": ["數學小考加油！", "ESL U4 Shadows：morning / midday / evening / long / short", "週五 20/11 ESL U4 測驗"],
+      "videos": [
+        {"id":"lOIGOT88Aqc","subject":"ESL","title":"Shadow | The Dr. Binocs Show","channel":"Peekaboo Kidz","len":"2:49","core":true,"note":"shadow / sun / light"},
+        {"id":"SnR-nKdC_Lw","subject":"ESL","title":"What Makes a Shadow? | Light and Shadows for Kids","channel":"Kids Academy","len":"4:56","core":true,"note":"low sun → long shadow；high sun → short shadow"},
+        {"id":"jxl28KQOHy4","subject":"ESL","title":"Adding '-ed' | Past Tense Verbs","channel":"Nessy","len":"2:18","core":true,"note":"played / watched / climbed"},
+        {"id":"KAsacxmPh1Q","subject":"ESL","title":"I Was, You Were (To Be Past Simple Song)","channel":"Rockin' English","len":"1:23","core":true,"note":"was / were"},
+        {"id":"jZrtm7ft8NQ","subject":"ESL","title":"Why Do Shadows Change Size Throughout the Day?","channel":"The Mystery of Why","len":"1:24","core":false,"note":"morning → midday → evening"},
+        {"id":"yuSHxrSNB8o","subject":"ESL","title":"Alphablocks - Long Vowels: Long I","channel":"Alphablocks","len":"4:42","core":false}
+      ]
+    },
+    {
+      "date": "2026-11-19",
+      "label": "星期四",
+      "topics": ["ESL U4：Sun / Moon / Earth / planet / stars", "複合字 sunrise / sunglasses / raincoat / sailboat", "過去式問句 Did you…?"],
+      "videos": [
+        {"id":"vcUyDAO1Fk0","subject":"ESL","title":"Sun, Moon, and Stars | Songs for Kids","channel":"The Singing Walrus","len":"3:41","core":true,"note":"Sun / Moon / stars / sky"},
+        {"id":"jZ3nMEwj0ZM","subject":"ESL","title":"Compound Words Song | Raincoat, Sunflower & More","channel":"Creative Happy Kids","len":"2:07","core":true,"note":"rain + coat = raincoat"},
+        {"id":"ahZ5xyPKnQY","subject":"ESL","title":"What did you do yesterday? (Past tense) - Sing along","channel":"English Singsing","len":"3:02","core":true,"note":"Did you…? Yes, I did."},
+        {"id":"t-y9Y9kvUxk","subject":"ESL","title":"The Past Tense Song","channel":"Teacher Ham","len":"2:06","core":true},
+        {"id":"Vb2ZXRh74WU","subject":"ESL","title":"StoryBots Outer Space | Planets, Sun, Moon, Earth and Stars","channel":"Netflix Jr.","len":"15:12","core":false},
+        {"id":"nsmurJ724dc","subject":"ESL","title":"Earth, Sun and Moon Song for Kids","channel":"Glee Gather","len":"1:38","core":false},
+        {"id":"LbA2LeGteME","subject":"ESL","title":"Learn Past Tense Verbs 2 - Patterns Chants","channel":"ELF Kids Videos","len":"1:49","core":false}
+      ]
+    },
+    {
+      "date": "2026-11-20",
+      "label": "星期五",
+      "topics": ["ESL 測驗加油！", "FINAL 1 暖身：Starters 聽力", "Science U1–U3 複習：habitats / forces / materials"],
+      "videos": [
+        {"id":"9XwM2QLOemM","subject":"ESL","title":"Pre A1 Starters - Listening Part 1 (with answers)","channel":"Cambridge English YLE","len":"7:28","core":true,"note":"FINAL 1 聽力題型練習"},
+        {"id":"Xj1ASC-TlsI","subject":"Science","title":"Animal Habitats | Animal Homes","channel":"learning junction","len":"4:08","core":true,"note":"Science U1 habitats"},
+        {"id":"ZLDUrPaLQWE","subject":"Science","title":"Push and Pull for Kids | Forces in Science","channel":"Homeschool Pop","len":"5:28","core":true,"note":"Science U2 forces"},
+        {"id":"LTqKxwH5Yfg","subject":"Science","title":"Natural and Man-Made | Kids Song","channel":"Zape TV","len":"2:19","core":true,"note":"Science U3 natural / made"},
+        {"id":"S_hUXoKYg6g","subject":"ESL","title":"Pre A1 Starters Speaking test – Rebecca","channel":"English with Cambridge","len":"3:19","core":false,"note":"看看口試長什麼樣"},
+        {"id":"340MmuY_osY","subject":"Science","title":"Materials And Their Properties","channel":"ClickView","len":"3:58","core":false},
+        {"id":"wmXXR3ECQD0","subject":"Science","title":"The Origin of Materials: Natural and Artificial","channel":"Smile and Learn","len":"2:35","core":false}
+      ]
+    }
+  ]
+}

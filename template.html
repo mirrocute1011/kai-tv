@@ -230,6 +230,7 @@ function findVideo(id){ for(const d of days()){ const v=d.videos.find(x=>x.id===
 function coreOf(d){ return d.videos.filter(v=>v.core); }
 function coreDone(d){ const c=coreOf(d); return c.length>0 && c.every(v=>state.watched[v.id]); }
 function starTotal(){ return Object.values(state.stars).filter(Boolean).length; }
+function starAllTime(){ let n=0; try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(!/^kaitv:\d{4}-/.test(k)) continue; const v=JSON.parse(localStorage.getItem(k)||'{}'); n+=Object.values(v.stars||{}).filter(Boolean).length; } }catch(e){} return Math.max(n,starTotal()); }
 function todayISO(){ const t=new Date(); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); }
 function defaultDay(){ const t=todayISO(); const d=days().find(x=>x.date===t); if(d) return d.date; if(t<BASE_WEEK.weekStart) return BASE_WEEK.days[0].date; if(t>BASE_WEEK.weekEnd) return BASE_WEEK.days[BASE_WEEK.days.length-1].date; return BASE_WEEK.days[0].date; }
 function fmtDate(iso){ const [y,m,d]=iso.split('-'); return `${+m}/${+d}`; }
@@ -377,7 +378,7 @@ function renderRewards(){
   let streak=0; for(const d of days()){ if(d.date>t) break; if(state.stars[d.date]) streak++; else streak=0; }
   const watchedN=Object.keys(state.watched).filter(id=>findVideo(id)).length;
   let h=`<div class="pagehead"><h1>🏆 我的獎勵</h1><span class="sub">每天看完任務影片 → 一顆星星</span></div>`;
-  h+=`<div class="stat"><div class="box"><b>${total} ⭐</b><span>本週星星</span></div><div class="box"><b>${streak} 🔥</b><span>連續天數</span></div><div class="box"><b>${watchedN} 🎬</b><span>看完的影片</span></div></div>`;
+  h+=`<div class="stat"><div class="box"><b>${total} ⭐</b><span>本週星星</span></div><div class="box"><b>${streak} 🔥</b><span>連續天數</span></div><div class="box"><b>${watchedN} 🎬</b><span>看完的影片</span></div><div class="box"><b>${starAllTime()} 🏅</b><span>累計星星（所有週）</span></div></div>`;
   h+=`<div class="weekrow">${days().map(d=>`<div class="daycard ${state.stars[d.date]?'got':''} ${d.date===t?'today':''}"><div class="d">${esc(d.label)}</div><div class="dt">${fmtDate(d.date)}</div><div class="big">⭐</div><div class="small">${coreOf(d).filter(v=>state.watched[v.id]).length}/${coreOf(d).length} 任務</div></div>`).join('')}</div>`;
   h+=`<h3 class="sec">🎁 獎勵階梯</h3><div class="ladder">${(glob.ladder||[]).map(l=>`<div class="rung ${total>=l.need?'ok':''}"><span class="need">${l.need} ⭐</span><span>${esc(l.text)}</span>${total>=l.need?'<span class="ok-t">已達成 ✓</span>':`<span class="ok-t" style="color:var(--muted)">還差 ${l.need-total} 顆</span>`}</div>`).join('')}</div>`;
   document.getElementById('main').innerHTML=h;
