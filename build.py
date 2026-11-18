@@ -14,6 +14,10 @@ if not weeks:
 target = (ROOT / "weeks" / f"{sys.argv[1]}.json") if len(sys.argv) > 1 else weeks[-1]
 week = json.loads(target.read_text(encoding="utf-8"))
 channels = json.loads((ROOT / "channels.json").read_text(encoding="utf-8"))
+phonics = json.loads((ROOT / "phonics.json").read_text(encoding="utf-8")) if (ROOT / "phonics.json").exists() else {"track": []}
+for st in phonics["track"]:
+    for key in ("main", "extra"):
+        if key in st: assert re.fullmatch(r"[\w-]{11}", st[key]["id"]), f"phonics ID 錯誤：{st}"
 
 # 基本檢查：ID 格式、日期順序、每天至少一部 core
 ids = set()
@@ -27,7 +31,7 @@ for d in week["days"]:
 
 tpl = (ROOT / "template.html").read_text(encoding="utf-8")
 safe = lambda o: json.dumps(o, ensure_ascii=False).replace("</", "<\\/")
-html = tpl.replace("/*__WEEK__*/", safe(week)).replace("/*__CHANNELS__*/", safe(channels))
+html = tpl.replace("/*__WEEK__*/", safe(week)).replace("/*__CHANNELS__*/", safe(channels)).replace("/*__PHONICS__*/", safe(phonics))
 (ROOT / "index.html").write_text(html, encoding="utf-8")
 (ROOT / "dist").mkdir(exist_ok=True)
 (ROOT / "dist" / f"{week['weekStart']}.html").write_text(html, encoding="utf-8")

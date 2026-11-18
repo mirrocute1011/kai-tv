@@ -182,6 +182,7 @@ textarea{width:100%;min-height:90px;font-family:ui-monospace,Consolas,monospace;
 
 <script id="weekdata" type="application/json">/*__WEEK__*/</script>
 <script id="channeldata" type="application/json">/*__CHANNELS__*/</script>
+<script id="phonicsdata" type="application/json">/*__PHONICS__*/</script>
 
 <script>
 /* =========================================================
@@ -190,13 +191,14 @@ textarea{width:100%;min-height:90px;font-family:ui-monospace,Consolas,monospace;
    ========================================================= */
 const BASE_WEEK = JSON.parse(document.getElementById('weekdata').textContent);
 const BASE_CHANNELS = JSON.parse(document.getElementById('channeldata').textContent).channels;
+const PHONICS = (function(){ try{ return JSON.parse(document.getElementById('phonicsdata').textContent); }catch(e){ return {track:[]}; } })();
 const LS_KEY = 'kaitv:' + BASE_WEEK.weekStart;
 const LS_GLOBAL = 'kaitv:global';
 
 const SUBJ = {
   'ESL':{c:'var(--esl)',k:'E'}, 'Maths':{c:'var(--maths)',k:'M'}, 'Science':{c:'var(--science)',k:'S'},
   'Global':{c:'var(--global)',k:'G'}, 'Music':{c:'var(--music)',k:'♪'}, 'Tiếng Việt':{c:'var(--tv)',k:'V'},
-  'Toán':{c:'var(--toan)',k:'T'}, 'TN&XH':{c:'var(--tnxh)',k:'X'}, 'Robotics':{c:'var(--robot)',k:'R'}, 'Art':{c:'#6d4c41',k:'A'}
+  'Toán':{c:'var(--toan)',k:'T'}, 'Phonics':{c:'#00acc1',k:'🔤'}, 'TN&XH':{c:'var(--tnxh)',k:'X'}, 'Robotics':{c:'var(--robot)',k:'R'}, 'Art':{c:'#6d4c41',k:'A'}
 };
 const DEFAULT_LADDER = [
   {need:1, text:'貼紙一張 🌈'},
@@ -221,10 +223,14 @@ function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); localStora
 function days(){
   return BASE_WEEK.days.map(d=>{
     const extra = state.added.filter(a=>a.date===d.date);
-    const videos = [...d.videos, ...extra].filter(v=>!state.hidden[v.id]);
-    return {...d, videos};
+    const ph = phonicsFor(d.date); const phv = ph ? ph.videos.filter(v=>!d.videos.some(x=>x.id===v.id)) : [];
+    const videos = [...phv, ...d.videos, ...extra].filter(v=>!state.hidden[v.id]);
+    return {...d, videos, phonics: ph};
   });
 }
+// 每日自然發音：從 PHONICS.startDate 起，每個上課日（一～五）推進一步
+function schoolDayIndex(iso){ if(!PHONICS.startDate) return -1; const a=new Date(PHONICS.startDate+'T00:00:00'), b=new Date(iso+'T00:00:00'); if(b<a) return -1; let n=0; for(let d=new Date(a); d<b; d.setDate(d.getDate()+1)){ const w=d.getDay(); if(w>=1&&w<=5) n++; } return n; }
+function phonicsFor(iso){ const i=schoolDayIndex(iso); if(i<0||i>=PHONICS.track.length) return null; const st=PHONICS.track[i]; const mk=(v,core)=>({...v, subject:'Phonics', core, phonics:true, note:(core?'第 '+(i+1)+' 步 · '+st.stage+' · ':'加練 · ')+st.focus}); const out=[mk(st.main,true)]; if(st.extra) out.push(mk(st.extra,false)); return {step:i+1,total:PHONICS.track.length,stage:st.stage,focus:st.focus,videos:out}; }
 function allChannels(){ return [...BASE_CHANNELS, ...(glob.channels||[])]; }
 function findVideo(id){ for(const d of days()){ const v=d.videos.find(x=>x.id===id); if(v) return {v,d}; } return null; }
 function coreOf(d){ return d.videos.filter(v=>v.core); }
@@ -284,13 +290,17 @@ function card(v){
 /* ---------- render: day page ---------- */
 function renderDay(){
   const d=days().find(x=>x.date===route.date)||days()[0];
-  const core=coreOf(d), bonus=d.videos.filter(v=>!v.core);
-  const doneN=core.filter(v=>state.watched[v.id]).length; const pct=core.length?Math.round(doneN/core.length*100):0;
+  const phIds=new Set((d.phonics?d.phonics.videos:[]).map(v=>v.id));
+  const core=coreOf(d).filter(v=>!phIds.has(v.id)), bonus=d.videos.filter(v=>!v.core&&!phIds.has(v.id));
+  const phList=d.videos.filter(v=>phIds.has(v.id));
+  const allCore=coreOf(d);
+  const doneN=allCore.filter(v=>state.watched[v.id]).length; const pct=allCore.length?Math.round(doneN/allCore.length*100):0;
   const got=state.stars[d.date]; const ready=coreDone(d)&&!got;
   let h=`<div class="pagehead"><h1>${esc(d.label)} <span class="sub">${fmtDate(d.date)}</span></h1><span class="sub">看完「今日任務」就能拿到今天的 ⭐</span></div>`;
   h+=`<div class="chips">${(d.topics||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div>`;
-  h+=`<div class="progress"><b>今日任務 ${doneN}/${core.length}</b><div class="bar"><i style="width:${pct}%"></i></div>
+  h+=`<div class="progress"><b>今日任務 ${doneN}/${allCore.length}</b><div class="bar"><i style="width:${pct}%"></i></div>
        ${got?'<b style="color:var(--star)">⭐ 今天的星星拿到了！</b>':ready?'<button class="claim" id="claimBtn">🎉 領取星星！</button>':'<span class="small">全部看完就能領星星</span>'}</div>`;
+  if(phList.length) h+=`<h3 class="sec">🔤 每日自然發音 <small>第 ${d.phonics.step}/${d.phonics.total} 步 · ${esc(d.phonics.stage)} · ${esc(d.phonics.focus)}</small></h3><div class="grid">${phList.map(card).join('')}</div>`;
   h+=`<h3 class="sec">📌 今日任務 <small>${core.length} 部</small></h3><div class="grid">${core.map(card).join('')}</div>`;
   if(bonus.length) h+=`<h3 class="sec">🎁 延伸觀賞 <small>看完任務後可以多看，不計入星星</small></h3><div class="grid">${bonus.map(card).join('')}</div>`;
   document.getElementById('main').innerHTML=h;
